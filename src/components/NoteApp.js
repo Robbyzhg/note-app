@@ -4,12 +4,42 @@ import NoteList from "./NoteList";
 import { getData } from '../utils/data'
 
 class NoteApp extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      notes: getData()
+    }
+
+    this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    this.onAddNotesHandler = this.onAddNotesHandler.bind(this);
+  }
+
+  onDeleteHandler(id) {
+    const notes = this.state.notes.filter(note => note.id !== id);
+    this.setState({notes});
+  }
+
+  onAddNotesHandler({judul, deskripsi}) {
+    this.setState((prevState) => {
+      return {
+        notes: [
+          ...prevState.notes,
+          {
+            id: +new Date(),
+            judul,
+            deskripsi,
+          }
+        ]
+      }
+    })
+  }
   render() {
-    const notes = getData();
     return (
       <div>
-        <FormInput />
-        <NoteList notes={notes} />
+        <FormInput addNotes={this.onAddNotesHandler} />
+        <br />
+        <NoteList notes={this.state.notes} onDelete={this.onDeleteHandler} />
       </div>
     )
   }
