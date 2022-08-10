@@ -1,14 +1,14 @@
 import React from "react";
 import FormInput from "./FormInput";
 import NoteList from "./NoteList";
-import { getData } from '../utils/data'
+import { getInitialData } from '../utils/data'
 
 class NoteApp extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      notes: getData()
+      notes: getInitialData()
     }
 
     this.onDeleteHandler = this.onDeleteHandler.bind(this);
